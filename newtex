@@ -1,0 +1,30 @@
+#! /bin/bash
+
+DIRECTORY=`pwd`
+
+for i in "$@"
+do
+    case $i in
+        -h | --help)
+	printf "\nThe script create a <name.tex> file in the current\n"
+	printf "directory (or in the <directory> if specified).\n"
+	printf "\n"
+	exit
+	;;
+	*)
+	C_EXT=${i#*.}	#remove <filename.>tex
+	EXTENSION=""
+	if  [ $C_EXT != "tex" ]; then
+		EXTENSION=.tex
+	fi
+	NOME=$i$EXTENSION
+	FILE=$DIRECTORY/$NOME
+	if [ ! -e $FILE ]; then
+		echo "" > $FILE
+	else
+	echo -e "Attenzione! il file $NOME esiste gia'\a"
+	fi
+        ;;
+    esac
+done
+
